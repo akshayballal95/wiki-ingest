@@ -1,12 +1,2 @@
-# Local data - not part of the plugin
-raw/
-wiki/
-processed.json
-ingest.config.json
-ingest-workspace/
-
-# OS
+.tmp/
 .DS_Store
-
-# Obsidian
-.obsidian/
