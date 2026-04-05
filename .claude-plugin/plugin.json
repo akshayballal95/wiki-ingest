@@ -1,0 +1,8 @@
+{
+  "name": "wiki-ingest",
+  "description": "AI-powered wiki ingestion — process PDFs, markdown, and URLs into a structured, interlinked wiki knowledge base",
+  "version": "1.0.0",
+  "author": {
+    "name": "Akshay Ballal"
+  }
+}

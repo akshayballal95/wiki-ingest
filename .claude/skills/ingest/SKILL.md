@@ -1,36 +1,58 @@
 ---
 name: ingest
-description: "Ingest raw files (PDFs, markdown, web links) into an AI-maintained wiki knowledge base. Reads source material, extracts concepts, structured data, and relationships, then creates or updates interlinked wiki pages. Use this skill when the user says 'ingest', 'add to wiki', 'process files', 'update knowledge base', or drops new files into raw/ and wants them processed. Also use when the user pastes a URL and wants its content added to the wiki."
+description: "Process source material (PDFs, markdown files, web URLs) into a structured, interlinked wiki knowledge base using a four-stage pipeline: chunk, extract, plan, write. Creates one wiki page per concept with dense [[cross-links]], maintains an index, tracks what has been processed, and writes source summaries for traceability. MUST use this skill whenever the user wants to: add documents or files to a wiki or knowledge base; ingest, import, or process PDFs, papers, articles, notes, or lecture materials; turn a URL or web article into wiki pages; update a knowledge base with new source material; extract concepts, findings, or structured data from documents into organized pages. This skill applies even when the user doesn't say 'ingest' explicitly — any request to read source material and organize it into wiki-style pages should use this skill. Do NOT use for: searching/querying existing wiki content, editing or reorganizing existing pages, or general file creation unrelated to knowledge extraction."
 ---
 
 # Ingest
 
 You are an ingestion agent that reads raw source material and maintains a structured wiki knowledge base. You follow a four-stage pipeline: **Chunk -> Extract -> Plan -> Write**. Each stage has a clear job — do them in order, don't skip stages.
 
+## Configuration
+
+On first run, check for `ingest.config.json` in the project root. If it doesn't exist, ask the user:
+
+1. **Where are your raw source files?** (default: `raw/`)
+2. **Where should the wiki be created?** (default: `wiki/`)
+
+Save their answers to `ingest.config.json`:
+
+```json
+{
+  "raw_dir": "raw/",
+  "wiki_dir": "wiki/",
+  "processed_file": "processed.json"
+}
+```
+
+On subsequent runs, read the config and use those paths. All paths below that reference `raw/` or `wiki/` should use the configured values instead.
+
+If the config file already exists, skip the questions and proceed.
+
 ## Folder structure
 
 ```
-raw/              — source files to ingest (PDFs, markdown, text)
-wiki/             — concept pages (one per concept)
-wiki/index.md     — master index: every concept page listed with a one-line description
-wiki/sources/     — source summary pages (one per ingested source or chunk)
-processed.json    — tracks which files have been ingested (filename -> content hash)
+<raw_dir>/              — source files to ingest (PDFs, markdown, text)
+<wiki_dir>/             — concept pages (one per concept)
+<wiki_dir>/index.md     — master index: every concept page listed with a one-line description
+<wiki_dir>/sources/     — source summary pages (one per ingested source or chunk)
+processed.json          — tracks which files have been ingested (filename -> content hash)
 ```
 
-If `wiki/`, `wiki/sources/`, or `wiki/index.md` don't exist yet, create them. If `processed.json` doesn't exist, create it as an empty JSON object `{}`.
+If `<wiki_dir>/`, `<wiki_dir>/sources/`, or `<wiki_dir>/index.md` don't exist yet, create them. If `processed.json` doesn't exist, create it as an empty JSON object `{}`.
 
 ## Supported input types
 
-- **PDF files** in `raw/` — read using the Read tool (which supports PDFs). For large PDFs, read in page ranges (20-40 pages at a time).
-- **Markdown / text files** in `raw/` — read directly.
+- **PDF files** in `<raw_dir>/` — read using the Read tool (which supports PDFs). For large PDFs, read in page ranges (20-40 pages at a time).
+- **Markdown / text files** in `<raw_dir>/` — read directly.
 - **Web links** — if the user pastes a URL, fetch its content using WebFetch and process it as a source. Use the URL as the source identifier.
 
 ## Before you start
 
-1. Read `processed.json` to see what's already been ingested.
-2. List files in `raw/` and identify unprocessed files (not in `processed.json`, or hash has changed).
-3. Read `wiki/index.md` to understand the current state of the wiki.
-4. If there are no new files and the user hasn't provided a URL, tell them there's nothing to ingest.
+1. Read `ingest.config.json` — if missing, run the configuration flow above.
+2. Read `processed.json` to see what's already been ingested.
+3. List files in `<raw_dir>/` and identify unprocessed files (not in `processed.json`, or hash has changed).
+4. Read `<wiki_dir>/index.md` to understand the current state of the wiki.
+5. If there are no new files and the user hasn't provided a URL, tell them there's nothing to ingest.
 
 ## The pipeline
 
