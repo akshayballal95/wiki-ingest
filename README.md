@@ -1,6 +1,6 @@
 # wiki-ingest
 
-A Claude Code plugin that turns raw source material into a structured, interlinked wiki knowledge base. Drop PDFs, markdown files, or paste URLs — an AI agent reads them, extracts concepts, and builds wiki pages with dense cross-links.
+An AI skill that turns raw source material into a structured, interlinked wiki knowledge base. Drop PDFs, markdown files, or paste URLs — an AI agent reads them, extracts concepts, and builds wiki pages with dense cross-links.
 
 ## What it does
 
@@ -14,16 +14,32 @@ A Claude Code plugin that turns raw source material into a structured, interlink
 
 ## Installation
 
-```bash
-/plugin install wiki-ingest@akshayballal/wiki-ingest
-```
-
-Or clone and use locally:
+### Using the Skills CLI
 
 ```bash
-git clone https://github.com/akshayballal/wiki-ingest.git
-claude --plugin-dir ./wiki-ingest
+npx skills install akshayballal95/wiki-ingest
 ```
+
+See [skills](https://www.npmjs.com/package/skills) for more details.
+
+### Claude Code plugin
+
+```bash
+/plugin install wiki-ingest@akshayballal95/wiki-ingest
+```
+
+### Manual installation
+
+Clone the repo and copy `skills/ingest/SKILL.md` into your project's skill/prompt directory:
+
+```bash
+git clone https://github.com/akshayballal95/wiki-ingest.git
+```
+
+- **Claude Code:** copy to `.claude/skills/ingest/SKILL.md`
+- **Cursor:** copy the content into `.cursorrules`
+- **Windsurf:** copy the content into `.windsurfrules`
+- **Other AI tools:** paste the SKILL.md content as a system prompt or context file
 
 ## Usage
 
@@ -85,9 +101,11 @@ Pages are written as wiki-style articles:
 
 ## Works with
 
+- [Claude Code](https://claude.ai/code) — CLI, desktop app, IDE extensions
+- [Cursor](https://cursor.com) — via `.cursorrules`
+- [Windsurf](https://codeium.com/windsurf) — via `.windsurfrules`
 - [Obsidian](https://obsidian.md) — wiki links resolve natively
-- Any markdown viewer — standard markdown throughout
-- Claude Code CLI, desktop app, and IDE extensions
+- Any AI coding tool that supports system prompts or context files
 
 ## License
 
