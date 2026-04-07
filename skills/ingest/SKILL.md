@@ -95,7 +95,11 @@ For each extracted item, decide:
 2. **Update or create?**
    - If the concept is already covered: plan what new information to add. Don't duplicate what's there. If the new information contradicts existing content, note the contradiction.
    - If the concept is new: plan a new page with a clear title and scope.
-3. **Cross-links** — for every page you're updating or creating, identify which other wiki pages it should link to using `[[Page Name]]` syntax. Be generous with links — they're what make the wiki useful.
+3. **Cross-links** — for every page you're updating or creating, identify which other wiki pages it should link to. Be generous with links — they're what make the wiki useful. Use Obsidian link syntax:
+   - `[[Page Name]]` — link to a whole page
+   - `[[Page Name#Section]]` — link to a specific header within a page (use this when the target page has a relevant subsection)
+   - `[[Page Name#Section|display text]]` — link with custom display text so the prose reads naturally (e.g., `[[Vacuum Pumps#Ultrasonic Leak Detectors|handheld ultrasonic leak detector]]`)
+   Prefer header-anchored links when a specific subsection is the real target — they're more precise than linking the whole page.
 4. **Deduplication** — if the source is reinforcing something already well-covered in the wiki, skip it rather than bloating pages with repetition.
 
 Write out the plan as a concrete list:
@@ -112,7 +116,7 @@ Execute the plan. This stage is mechanical — the thinking was done in Stage 3.
 - Read the current page content
 - Merge new information into the appropriate sections
 - Preserve existing structure, tables, and formatting
-- Add new cross-links using `[[Page Name]]` syntax
+- Add new cross-links using `[[Page Name]]`, `[[Page Name#Section]]`, or `[[Page Name#Section|display text]]` as appropriate
 - Don't rewrite content that doesn't need changing
 
 **Creating new pages:**
@@ -142,7 +146,7 @@ Wiki pages should be:
 
 - **Substantial.** A page on "Gradient Descent" should explain what it is, how it works, key variants, and where it's used — not just a one-line definition. Think encyclopedia article, not glossary entry.
 - **Self-contained.** A reader should be able to understand the page without reading other pages. Cross-links provide depth, not prerequisites.
-- **Densely linked.** Mention a concept that has its own page? Link it: `[[Concept Name]]`. This is how the wiki becomes navigable. Link on first mention in each major section.
+- **Densely linked.** Mention a concept that has its own page? Link it. Use `[[Concept Name]]` for whole-page links, `[[Concept Name#Section]]` to target a specific header, and `[[Concept Name#Section|display text]]` when you need custom display text so the sentence reads naturally — e.g., "use a [[Vacuum Pumps#Ultrasonic Leak Detectors|handheld ultrasonic leak detector]] to find leaks". Prefer header-anchored links when a subsection is the real target. Link on first mention in each major section. Use `## Headers` within your own pages so other pages can link to them.
 - **Preserving of structured data.** Tables, benchmarks, and metrics should appear as markdown tables, not flattened into prose. These are often the most valuable part of a source.
 - **Honest about uncertainty.** If two sources disagree, say so. Use a "Contradictions" or "Open Questions" section when needed rather than silently picking one version.
 - **Jargon-aware.** Define technical terms and acronyms on first use. Don't assume the reader knows what "FFN" or "oracle routing" means — briefly explain inline (e.g., "FFN (Feed-Forward Network) layers — the dense transformation blocks within each transformer layer").
